@@ -1,0 +1,8 @@
+pandas
+tree-sitter
+tree-sitter-c
+tree-sitter-cpp
+tree-sitter-java
+tree-sitter-python
+tree-sitter-javascript
+tree-sitter-typescript

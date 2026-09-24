@@ -1,0 +1,21 @@
+id,expected,sub,predicted,status,error,correct
+39,Type III,insert/renamed-var,Type V,success,,False
+40,Type III,insert/renamed-var,Type V,success,,False
+41,Type III,insert/renamed-var,Type V,success,,False
+42,Type III,insert/renamed-var,Type V,success,,False
+43,Type III,insert/renamed-var,Type V,success,,False
+44,Type III,insert/renamed-var,Type V,success,,False
+45,Type III,insert/renamed-var,Type V,success,,False
+46,Type III,insert/renamed-var,Type V,success,,False
+47,Type III,insert/renamed-var,Type V,success,,False
+48,Type III,insert/renamed-var,Type V,success,,False
+49,Type III,insert/namespace-api,Type V,success,,False
+50,Type III,insert/namespace-api,Type V,success,,False
+51,Type III,insert/namespace-api,Type V,success,,False
+52,Type III,insert/namespace-api,Type V,success,,False
+53,Type III,update/different-new-name,Type III,success,,True
+54,Type III,update/different-new-name,Type III,success,,True
+55,Type III,update/different-new-name,Type III,success,,True
+56,Type III,update/different-new-name,Type III,success,,True
+57,Type III,update/different-new-name,Type III,success,,True
+58,Type III,update/different-new-name,Type III,success,,True

@@ -1,0 +1,10 @@
+Type I — No Changes
+The backported patch is applied with no modification: its content and surrounding code context are identical between the original and target versions. A pure copy-paste case.
+Type II — Only Patch Location Changes
+The patch content itself is identical to the original, but where it needs to be applied differs — e.g., a different file, function, or line position in the target version (due to code reorganization, function renaming location, etc.), even though the surrounding logic is unchanged.
+Type III — Only Namespace Changes
+The patch is applied at the same location/context, but requires renaming — e.g., variable names, function names, or identifiers differ between the original and target codebase (such as an object being accessed as obj.attr in one version vs. obj['attr'] in another).
+Type IV — Location & Namespace Changes
+A combination of Type II and Type III: both the patch's location and its identifiers/namespace must be adapted to fit the target version.
+Type V — Logical or Structural Changes
+The most complex case: the patch must be substantively rewritten to fit the target codebase — e.g., a helper function or logic block that exists in the mainline version doesn't exist in the target and must be reimplemented, or the fix needs restructuring (added/removed code, different control flow) beyond simple relocation or renaming.
