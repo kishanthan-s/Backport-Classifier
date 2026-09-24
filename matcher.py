@@ -36,21 +36,6 @@ def get_child_signature(children):
     return signature
 
 
-IDENTIFIER_NODES = {"identifier", "field_identifier", "type_identifier"}
-
-
-def get_normalized_signature(node):
-    """Build a tree signature that ignores identifier spelling only."""
-    if not node:
-        return None
-    value = None if node.get("node_type") in IDENTIFIER_NODES else node.get("value")
-    return (
-        node.get("node_type"),
-        value,
-        tuple(get_normalized_signature(child) for child in node.get("children", [])),
-    )
-
-
 def children_match(main_action, backport_action):
     """
     Only meaningful for tree actions. Compares the recursive
@@ -59,7 +44,7 @@ def children_match(main_action, backport_action):
     main_children = main_action.get("children") or []
     backport_children = backport_action.get("children") or []
 
-    return get_normalized_signature({"children": main_children}) == get_normalized_signature({"children": backport_children})
+    return get_child_signature(main_children) == get_child_signature(backport_children)
 
 
 def match_actions(main_actions, backport_actions):

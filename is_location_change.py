@@ -202,11 +202,7 @@ def location_change_check(filepath, main_actions, backport_actions, repo_dir="."
                     if not nodes_equal(main_action, backport_action):
                         continue
             # Your action matching condition goes here
-            values_match = (
-                main_action["value"] == backport_action["value"]
-                or main_action.get("node_type") in {"identifier", "field_identifier", "type_identifier"}
-            )
-            if values_match:
+            if main_action["value"] == backport_action["value"]:
                 match_index = backport_index
                 break
 

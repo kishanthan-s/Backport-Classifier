@@ -27,12 +27,6 @@ type_5_node_types = {
     'call_expression',
     'argument_list',
 }
-
-type_3_node_types = {
-    'identifier',
-    'field_identifier',
-    'type_identifier'
-}
 def compare_actions(main_action, backport_action):
     """
     Compare one main action with one backport action.
@@ -44,10 +38,7 @@ def compare_actions(main_action, backport_action):
     backport_initial_value = backport_action.get('value')
     backport_new_value = backport_action.get('new_value')
 
-    values_match = (
-        main_initial_value == backport_initial_value
-        and main_new_value == backport_new_value
-    )
+    values_match = (main_new_value == backport_new_value)
 
     return {
         'type': 'namespace_or_identifier_change',
@@ -68,8 +59,15 @@ def compare_actions(main_action, backport_action):
 
 def compare_action_lists(main_actions, backport_actions):
 
-    main_updates = main_actions
-    backport_updates = backport_actions
+    main_updates = [
+        a for a in main_actions
+        if a.get('action') == 'update-node'
+    ]
+
+    backport_updates = [
+        a for a in backport_actions
+        if a.get('action') == 'update-node'
+    ]
 
     matches = []
     unmatched_main = []
@@ -101,34 +99,11 @@ def compare_action_lists(main_actions, backport_actions):
             )
 
             
-            if main_action.get('action') != backport_action.get('action'):
-                continue
-            if main_action.get('node_type') != backport_action.get('node_type'):
-                continue
-            if main_action.get('action') == 'update-node':
-                if main_action.get('value') != backport_action.get('value'):
-                    continue
-            elif main_action.get('node_type') not in type_3_node_types:
-                if main_action.get('value') != backport_action.get('value'):
-                    continue
-
-            # Pair structurally equivalent tree actions, ignoring identifier spelling.
-            if main_action.get('action') in {'insert-tree', 'delete-tree', 'move-tree'}:
-                def signature(node):
-                    value = None if node.get('node_type') in type_3_node_types else node.get('value')
-                    return (node.get('node_type'), value, tuple(signature(c) for c in node.get('children', [])))
-                if signature(main_action) != signature(backport_action):
-                    continue
-
-            if main_action.get('action') in {
-                'insert-node', 'delete-node', 'update-node',
-                'insert-tree', 'delete-tree', 'move-tree', 'move-node',
-            }:
+            # Pair using the initial value
+            if main_action.get('value') == backport_action.get('value'):
                 match_idx = idx
                 type_3_flags.append(is_type_3)
-                type_5_flags.append(
-                    is_type_5 and main_action.get('action') == 'update-node'
-                )
+                type_5_flags.append(is_type_5)
                 break
 
         if match_idx is not None:
